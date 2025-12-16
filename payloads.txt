@@ -42,7 +42,6 @@ admin' --
 # --- Comment & Quote Manipulation ---
 ' --
 ' /*
-"' OR "" = "
 ' OR '1'='1' /*
 
 # --- Heavy Query (Time-Like Behavior in SQLite) ---
