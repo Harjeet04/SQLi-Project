@@ -1,5 +1,3 @@
-
-
 from flask import Flask, request, render_template
 import sqlite3
 
@@ -9,31 +7,30 @@ def query_db_raw(username):
     conn = sqlite3.connect('users.db')
     c = conn.cursor()
 
-    # VULNERABLE: unsafe string formatting
+    # ❌ INTENTIONALLY VULNERABLE (DO NOT FIX)
     sql = f"SELECT id, username FROM users WHERE username = '{username}'"
     c.execute(sql)
 
     rows = c.fetchall()
-    col_names = [desc[0] for desc in c.description]   # Default headers
+    col_names = [desc[0] for desc in c.description]
 
-    # ----------- ⭐ UNION DETECTION + FIX ⭐ -----------
+    # ⭐ UNION-based attack header handling (for demo clarity)
     if "UNION" in username.upper():
-        # Replace header names for UNION SELECT attacks
         col_names = ["username", "password"]
 
     conn.close()
     return col_names, rows
-    # -----------------------------------------------
 
 
+# 👉 INDEX: VULNERABLE MODE ONLY
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', mode="vulnerable")
 
 
 @app.route('/search_vuln', methods=['POST'])
 def search_vuln():
-    username = request.form.get('username','')
+    username = request.form.get('username', '')
 
     col_names, results = query_db_raw(username)
 
@@ -41,8 +38,8 @@ def search_vuln():
         'result.html',
         endpoint='VULNERABLE',
         query=username,
-        results=results,
-        col_names=col_names
+        col_names=col_names,
+        results=results
     )
 
 

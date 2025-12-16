@@ -1,5 +1,3 @@
-
-
 from flask import Flask, request, render_template
 import sqlite3
 from detector import is_sqli, sanitize, log_detection
@@ -12,18 +10,21 @@ def query_db_param(username):
 
     c.execute("SELECT id, username FROM users WHERE username = ?", (username,))
     rows = c.fetchall()
-    col_names = [desc[0] for desc in c.description]  # REAL column names
+    col_names = [desc[0] for desc in c.description]
 
     conn.close()
     return col_names, rows
 
+
+# 👉 INDEX: SECURE MODE ONLY
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', mode="secure")
+
 
 @app.route('/search_secure', methods=['POST'])
 def search_secure():
-    username = request.form.get('username','')
+    username = request.form.get('username', '')
     sqli, pattern = is_sqli(username)
 
     if sqli:
@@ -47,6 +48,7 @@ def search_secure():
         results=rows
     )
 
+
 @app.route('/dashboard')
 def dashboard():
     logs = []
@@ -58,6 +60,7 @@ def dashboard():
         pass
 
     return render_template("dashboard.html", logs=logs)
+
 
 if __name__ == '__main__':
     app.run(port=5002, debug=True)

@@ -49,11 +49,24 @@
             padding: 2px 4px;
             border-radius: 4px;
         }
+        .mode {
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .secure {
+            color: green;
+        }
+        .vulnerable {
+            color: red;
+        }
     </style>
 </head>
 <body>
 
-    <h2>SQL Injection Demo</h2>
+<h2>SQL Injection Demo</h2>
+
+{% if mode == "vulnerable" %}
+    <div class="mode vulnerable">Mode: VULNERABLE</div>
 
     <div class="box">
         <form action="/search_vuln" method="post">
@@ -62,6 +75,18 @@
             <button type="submit">Search (vuln)</button>
         </form>
     </div>
+
+    <div class="payload-box">
+        <strong>Try these SQLi payloads:</strong><br>
+        <code>' OR '1'='1</code> &nbsp;
+        <code>admin' --</code> &nbsp;
+        <code>' UNION SELECT username,password FROM users --</code>
+    </div>
+{% endif %}
+
+
+{% if mode == "secure" %}
+    <div class="mode secure">Mode: SECURE</div>
 
     <div class="box">
         <form action="/search_secure" method="post">
@@ -73,15 +98,15 @@
 
     <div class="payload-box">
         <strong>Try these SQLi payloads:</strong><br>
-        <code>' OR '1'='1</code> &nbsp;  
-        <code>admin' --</code> &nbsp;  
+        <code>' OR '1'='1</code> &nbsp;
+        <code>admin' --</code> &nbsp;
         <code>' UNION SELECT username,password FROM users --</code>
     </div>
 
     <p style="margin-top:20px;">
-    <a href="/dashboard">View SQLi Detection Dashboard</a>
-</p>
-
+        <a href="/dashboard">View SQLi Detection Dashboard</a>
+    </p>
+{% endif %}
 
 </body>
 </html>

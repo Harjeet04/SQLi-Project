@@ -62,3 +62,31 @@
 2025-11-16 19:33:25	127.0.0.1	(?i)--	admin' --
 2025-11-16 19:33:32	127.0.0.1	(?i)\bOR\b\s+'?1'?='?1	' OR '1'='1
 2025-11-16 19:33:39	127.0.0.1	(?i)\bUNION\b	' UNION SELECT username,password FROM users --
+2025-11-16 19:44:17	127.0.0.1	(?i)\bOR\b\s+'?1'?='?1	' OR '1'='1
+2025-11-16 19:44:26	127.0.0.1	(?i)\bUNION\b	' UNION SELECT username,password FROM users --
+2025-11-16 19:44:40	127.0.0.1	(?i)--	admin' --
+2025-11-16 19:44:49	127.0.0.1	(?i)--	admin' --
+2025-11-16 19:45:59	127.0.0.1	(?i)\bOR\b\s+'?1'?='?1	' OR 1=1; SELECT SLEEP(5); --
+2025-11-25 09:33:05	127.0.0.1	(?i)\bUNION\b	' UNION SELECT username,password FROM users --
+2025-11-25 09:34:16	127.0.0.1	(?i)\bOR\b\s+'?1'?='?1	' OR '1'='1
+2025-11-25 09:34:16	127.0.0.1	(?i)--	admin' --
+2025-11-25 09:34:16	127.0.0.1	(?i)\bOR\b\s+'?1'?='?1	' OR 1=1 --
+2025-11-25 09:34:16	127.0.0.1	(?i)\bUNION\b	' UNION SELECT username, password FROM users --
+2025-11-25 09:34:17	127.0.0.1	(?i)--	'; DROP TABLE users; --
+2025-11-25 09:34:17	127.0.0.1	(?i)\bSLEEP\(	' OR SLEEP(5) --
+2025-11-25 09:34:18	127.0.0.1	(?i)\bOR\b\s+'?1'?='?1	' or '1'='1' /*
+2025-11-25 09:34:18	127.0.0.1	(?i)\bUNION\b	' UNION SELECT null,null --
+2025-11-25 10:11:33	127.0.0.1	(?i)\bUNION\b	' UNION SELECT username,password FROM users --
+2025-11-25 10:11:47	127.0.0.1	(?i)\bOR\b\s+'?1'?='?1	' OR '1'='1
+2025-11-25 10:12:21	127.0.0.1	(?i)\bOR\b\s+'?1'?='?1	' OR '1'='1
+2025-11-25 10:12:21	127.0.0.1	(?i)--	admin' --
+2025-11-25 10:12:22	127.0.0.1	(?i)\bOR\b\s+'?1'?='?1	' OR 1=1 --
+2025-11-25 10:12:22	127.0.0.1	(?i)\bUNION\b	' UNION SELECT username, password FROM users --
+2025-11-25 10:12:22	127.0.0.1	(?i)--	'; DROP TABLE users; --
+2025-11-25 10:12:23	127.0.0.1	(?i)\bSLEEP\(	' OR SLEEP(5) --
+2025-11-25 10:12:23	127.0.0.1	(?i)\bOR\b\s+'?1'?='?1	' or '1'='1' /*
+2025-11-25 10:12:23	127.0.0.1	(?i)\bUNION\b	' UNION SELECT null,null --
+2025-12-16 10:24:03	127.0.0.1	(?i)\bUNION\b	' UNION SELECT username,password FROM users --
+2025-12-16 10:26:39	127.0.0.1	(?i)\bOR\b\s+'?1'?='?1	' OR '1'='1
+2025-12-16 10:26:43	127.0.0.1	(?i)--	admin' --
+2025-12-16 10:26:52	127.0.0.1	(?i)\bUNION\b	' UNION SELECT username,password FROM users --
